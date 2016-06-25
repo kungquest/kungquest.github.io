@@ -23,8 +23,6 @@
       <a-image position="0 -.2 5" src="#highlight1" rotation="-90 0 0"
                scale="30 30 30"></a-image>
 
-      
-
          <!-- 
       <a-entity position="0 4.2 -5" id="orangeBall">
         <a-sphere position="0 0 0" radius="2" color="#F16745" roughness="0.8" width-segments="52" height-segments="52" width>
@@ -34,16 +32,12 @@
 
       </a-entity>
       -->
-      <a-box id="orange-cube" position="0 3.5 -2" rotation="30 30 0" width="2" depth="2"
-             height="2" color="#F16745" roughness="0.8">
-        <!--<a-event name="cursor-mouseenter" scale="3 1 1" color="#FFC65D"></a-event>
-        <a-event name="cursor-mouseleave" scale="1 1 1" color="#F16745"></a-event>-->
-        <a-animation begin="cursor-click" fill="forwards" repeat="1"
-                       direction="alternate" attribute="position" from="0 3.5 -2"
-                       to="0 5 -2" dur="2000"></a-animation>
+      <a-entity position="0 0 0">
+      <a-box id="orange-cube" position="0 3.5 -2" rotation="30 30 0" width="2" depth="2" height="2" color="#F16745" roughness="0.8" rotation="0 45 0">
+        <a-animation begin="cursor-click" fill="forwards" repeat="1" direction="alternate" attribute="position" from="0 3.5 -2" to="0 5 -2" dur="2000"></a-animation>
       </a-box>
+      </a-entity>
 
-      <a-image id="shadow" position="0 0 -2" src="#shadow2" opacity="0.5" rotation="-90 0 0" scale="2 2 2"></a-image>
 
       <!-- CAMERA -->
       <a-entity position="0 1.8 4">
@@ -57,6 +51,7 @@
 
   </a-scene>
 
+<!--
   <script>
   (function () {
         // Custom states.
@@ -85,6 +80,6 @@
         }
       })();
       </script>
-    
+    -->
   </body>
 </html>
