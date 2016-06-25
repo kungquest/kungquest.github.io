@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Spheres & Fogs</title>
     <meta name="description" content="Hello, World! • A-Frame">
-    <script src="https://aframe.io/releases/0.2.0/aframe.min.js"></script>
+    <script src="dist/aframe.js"></script>
     <script>
       /*
       //  Write your creative code interations here
@@ -16,36 +16,77 @@
 
       <a-assets>
         <img id="highlight1" src="assets/img/radial-highlight.png">
-        <img id="shadow3" src="assets/img/radial-shadow-3.png">
+        <img id="shadow2" src="assets/img/radial-shadow-2.png">
       </a-assets>
+
+      <!-- 
+        CREATE SCENES
+      -->
 
       <!-- Ground Highlight -->
       <a-image position="0 -.2 5" src="#highlight1" rotation="-90 0 0"
                scale="30 30 30"></a-image>
 
-         <!-- Orange -->
-      <a-entity position="0 0 -5" id="orangeBall">
-        <!--<a-animation attribute="position" from="0 4.2 0" to="0 3.2 0" begin="500" dur="10000"
-                       fill="both" easing="ease-out"></a-animation>-->
-         <a-animation attribute="position" begin="click" to="0 360 0"></a-animation>
-        <a-sphere position="0 4.2 0" radius="4.2" color="#F16745"
-                  roughness="0.8" width-segments="52" height-segments="52"></a-sphere>
-        <!--<a-image src="#shadow3" rotation="-90 0 0" scale="3 3 3"></a-image>-->
+         <!-- 
+      <a-entity position="0 4.2 -5" id="orangeBall">
+        <a-sphere position="0 0 0" radius="2" color="#F16745" roughness="0.8" width-segments="52" height-segments="52" width>
+          <a-event name="cursor-mouseenter" radius="3" color="#F16745"></a-event>
+          <a-event name="cursor-mouseleave" radius="2" color="#F16745"></a-event>
+        </a-sphere>
+
+      </a-entity>
+      -->
+      <a-box id="orange-cube" position="0 3.5 -2" rotation="30 30 0" width="2" depth="2"
+             height="2" color="#F16745" roughness="0.8">
+        <!--<a-event name="cursor-mouseenter" scale="3 1 1" color="#FFC65D"></a-event>
+        <a-event name="cursor-mouseleave" scale="1 1 1" color="#F16745"></a-event>-->
+        <a-animation begin="cursor-click" fill="forwards" repeat="1"
+                       direction="alternate" attribute="position" from="0 3.5 -2"
+                       to="0 5 -2" dur="2000"></a-animation>
+      </a-box>
+
+      <a-image id="shadow" position="0 0 -2" src="#shadow2" opacity="0.5" rotation="-90 0 0" scale="2 2 2"></a-image>
+
+      <!-- CAMERA -->
+      <a-entity position="0 1.8 4">
+        <a-camera id="camera">
+          <a-cursor color="#4CC3D9"></a-cursor>
+        </a-camera>
       </a-entity>
 
-      <!-- Camera -->
-      <a-camera position="0 1.8 0">
-        <a-cursor color="#2E3A87">
-      </a-camera>
-
-      <!-- Floor -->
-      <!--<a-plane rotation="-90 0 0" width="5" height="5" color="#7BC8A4"></a-plane>-->
-
-      <!-- Background -->
+      <!-- BACKGROUND -->
       <a-sky color="#AAB"></a-sky>
 
   </a-scene>
+
+  <script>
+  (function () {
+        // Custom states.
+        var clickedEl = null;
+        var els = document.querySelectorAll('a-entity');
+        Array.prototype.forEach.call(els, function (el) {
+          el.addEventListener('cursor-click', function () {
+            if (clickedEl && clickedEl !== el) {
+              clickedEl.removeState('selected');
+            }
+            if (!el.classList.contains('clickable')) { return; }
+            clickedEl = el;
+            clickedEl.addState('selected');
+          });
+        });
+
+        // Responding to mouse events.
+        var cubes = document.querySelectorAll('a-entity[mixin*=cube]');
+        var i;
+        for (i = 0; i < cubes.length; ++i) {
+          cubes[i].addEventListener('cursor-click', function () {
+            var href = this.getAttribute('href');
+            if (!href) { return; }
+            window.top.postMessage({type: 'navigate', data: {url: href}}, '*');
+          })
+        }
+      })();
+      </script>
     
-    -->
   </body>
 </html>
