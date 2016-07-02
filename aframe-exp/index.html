@@ -39,9 +39,16 @@
           <a-entity cursor
                     geometry="primitive: ring; radiusOuter: 0.015; radiusInner: 0.01; segmentsTheta: 32"
                     material="color: #283644; shader: flat"
-                    raycaster="far: 30"
                     position="0 0 -0.75"></a-entity>
         </a-entity>
+      </a-entity>
+
+      <!--
+        CREATE YOUR CUBES HERE
+      -->
+
+      <a-entity mixin="red cube" position="2 2 2" material="color:rgba(255,255,255,1);" id="nodeCubeOri">
+        <a-animation begin="click" attribute="rotation" dur="10000" fill="forwards" to="0 360 0" repeat="indefinite"></a-animation>
       </a-entity>
 
       <!-- 
@@ -113,12 +120,11 @@
      * CREATE INTERACTION
      */
 
-    document.querySelector('#cube').addEventListener('mouseenter', function () {
-      this.setAttribute('material', 'color', 'green');
-      console.log('I was clicked!');
-      
+    document.querySelector('#cubeNode').addEventListener('click', function () {
+      //this.setAttribute('material', 'color', 'green');
+      console.log("test");
       // animation
-      //node.innerHTML = '<a-animation begin="click" attribute="rotation" dur="10000" fill="forwards" to="0 360 0" repeat="indefinite"></a-animation>';
+      node.innerHTML = '<a-animation begin="click" attribute="rotation" dur="10000" fill="forwards" to="0 360 0" repeat="indefinite"></a-animation>';
     });
 
     })();
