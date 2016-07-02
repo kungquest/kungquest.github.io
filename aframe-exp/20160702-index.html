@@ -14,9 +14,6 @@
   <body>
     <a-scene stats fog="type: linear; color: #AAB; far: 30; near: 0" id="scene">
 
-      <!--
-        DETERMINE YOUR ASSETS HERE. COLOR/TEXTURE
-      -->
       <a-assets>
         <img id="highlight1" src="assets/img/radial-highlight.png">
         <img id="shadow2" src="assets/img/radial-shadow-2.png">
@@ -25,15 +22,10 @@
         <a-mixin id="cube" geometry="primitive: box; width: 2; depth:2; height:2;"></a-mixin>
       </a-assets>
 
-      <!-- 
-        GIVE THE GROUND A LIL HIGHLIGHT
-      -->
+      <!-- Ground Highlight -->
       <a-image position="0 -.2 5" src="#highlight1" rotation="-90 0 0" scale="30 30 30"></a-image>
 
 
-      <!-- 
-        CREATE YOUR CAMERA
-      -->
       <a-entity position="0 2.2 4">
         <a-entity camera look-controls wasd-controls>
           <a-entity cursor
@@ -44,9 +36,7 @@
         </a-entity>
       </a-entity>
 
-      <!-- 
-        BACKGROUND
-      -->
+      <!-- BACKGROUND -->
       <a-sky color="#AAB"></a-sky>
 
 
@@ -54,7 +44,7 @@
 
   <script>
   (function () {
-    
+    var count = 2;
 
     /**
      * Returns a random integer between min (inclusive) and max (inclusive)
@@ -63,21 +53,14 @@
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-
-    /**
-     * RANDOM POS
-     */
     function getRandomPos(){
-      var x = getRandomInt(-10, 10);
-      var y = getRandomInt(-10, 10);
-      var z = getRandomInt(-10, 10);
+      var x = getRandomInt(-5, 5);
+      var y = getRandomInt(-5, 5);
+      var z = getRandomInt(-5, 5);
       var coordinate = x+" "+y+" "+z;
       return coordinate;
     }
-
-    /**
-     * RANDOM COLOR
-     */
+    
     function getRandomColor(){
       var r = getRandomInt(0, 255);
       var g = getRandomInt(0, 255);
@@ -87,38 +70,25 @@
       return color;
     }
 
-    /**
-     * CREATE INSTANCES OF CUBES
-     */
 
-    var cubeCount = 1;
-    for (i=0;i<cubeCount;i++){
-      // setup an entity, and call it a node
+    for (i=0;i<count;i++){
+      // create node
       var node = document.createElement('a-entity');
-      // setup a red cube
+      // set it to be a cube
       node.setAttribute("mixin","cube red");
-      // setup position
       node.setAttribute("position","");
-      // give this node random position
       node.setAttribute("position",getRandomPos());
-      // give this node a random color
       node.setAttribute("material","color: "+getRandomColor());
-      node.setAttribute("id","cubeNode");
-      // append
       document.getElementById("scene").appendChild(node);
 
     }
 
-    /**
-     * CREATE INTERACTION
-     */
-
-    document.querySelector('#cube').addEventListener('mouseenter', function () {
-      this.setAttribute('material', 'color', 'green');
+    document.querySelector('#cube').addEventListener('click', function () {
+      this.setAttribute('material', 'color', 'red');
       console.log('I was clicked!');
       
       // animation
-      //node.innerHTML = '<a-animation begin="click" attribute="rotation" dur="10000" fill="forwards" to="0 360 0" repeat="indefinite"></a-animation>';
+      node.innerHTML = '<a-animation begin="click" attribute="rotation" dur="10000" fill="forwards" to="0 360 0" repeat="indefinite"></a-animation>';
     });
 
     })();
