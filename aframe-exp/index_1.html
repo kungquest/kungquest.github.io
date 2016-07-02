@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Spheres & Fogs</title>
     <meta name="description" content="Hello, World! • A-Frame">
-    <script src="dist/aframe-v0.2.0.min.js"></script>
+    <script src="dist/aframe.js"></script>
     <script>
       /*
       //  Write your creative code interations here
@@ -44,6 +44,8 @@
       </a-entity>
       -->
 
+      <a-entity mixin="red cube" material="color:rgba(0,0,255,1)" position="0 3.5 -2"></a-entity>
+
       <a-entity position="0 2.2 4">
         <a-entity camera look-controls wasd-controls>
           <a-entity cursor
@@ -62,7 +64,9 @@
 
   <script>
   (function () {
-    var count = 2;
+    var count = 50;
+    
+    
 
     /**
      * Returns a random integer between min (inclusive) and max (inclusive)
@@ -99,15 +103,10 @@
       node.setAttribute("material","color: "+getRandomColor());
       document.getElementById("scene").appendChild(node);
 
-    }
-
-    document.querySelector('#cube').addEventListener('click', function () {
-      this.setAttribute('material', 'color', 'red');
-      console.log('I was clicked!');
-      
       // animation
-      node.innerHTML = '<a-animation begin="click" attribute="rotation" dur="10000" fill="forwards" to="0 360 0" repeat="indefinite"></a-animation>';
-    });
+      node.innerHTML = '<a-animation begin="cursor-click" fill="forwards" direction="normal" attribute="rotation" from="0 0 0" to="360 360 0" dur="500"></a-animation>';
+
+    }
 
     })();
   </script>
