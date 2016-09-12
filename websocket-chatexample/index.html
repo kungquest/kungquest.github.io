@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form#formChatMsg { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form#formChatMsg input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form#formChatMsg button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+
+      form#formNickname {}
+
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+  <body>
+  	<div class="nick-wrap">
+	  	<form id="formNickname">
+	  		<input id="inputNickname" autocomplete="off" /><button>Select Nickname</button>
+	  	</form>
+	  	<div id="selectedNickname"></div>
+  	</div>
+  	<div class="chat-wrap">
+	    <ul id="messages"></ul>
+	    <form id="formChatMsg" action="">
+	      <input id="m" autocomplete="off" /><button>Send</button>
+	      <br><br>
+	      
+	    </form>
+    </div>
+    <!-- That’s all it takes to load the socket.io-client, which exposes a io global, and then connect. -->
+    <script src="/socket.io/socket.io.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+
+	  var socket = io();
+	  var nickname = "";
+
+	  initNickname();
+
+	  function initNickname(){
+
+	  	$('.chat-wrap').hide();
+
+	  	$('#formNickname').submit(function(){
+	    
+		    // chat message
+			nickname = $('#inputNickname').val();
+			//console.log("your nickname is "+nickname);
+
+			initChat();
+
+			msg = "Your nickname is " + nickname;
+			socket.emit('chat message', msg);
+
+		    return false;
+
+		    $('#formNickname').hide();
+		  
+		  });
+	  	
+	  }
+
+	  function initChat(){
+
+	  	$('.nick-wrap').hide();
+	  	$('.chat-wrap').show();
+
+	  	var msg = "";
+
+	  	$('#formChatMsg').submit(function(){
+
+	  		msg = $('#m').val() + "  -" + nickname
+		    // chat message
+		    socket.emit('chat message', msg);
+		    // console.log('whats your message'+msg);
+		    $('#m').val('');
+		    //socket.emit('nickname choice', $('#nickname').val());
+		  	//$('#nickname').val('');
+		    return false;
+		  });
+
+
+		  socket.on('chat message',function(msg){
+		  	if(nickname==null){
+		  		nickname="undefined";
+		  		console.log("1");
+		  	}else{
+		  		$('#messages').append($('<li>').text(msg));
+		  		console.log("2");
+		  	}
+		  });
+
+		  socket.on('connection msg',function(msg){
+		  	$('#messages').append($('<li>').text(msg));
+		  });
+
+		  initTypeListener();
+	  }
+
+	  function initTypeListener(){
+	  	var searchTimeout;
+	    document.getElementById('formChatMsg').onkeypress = function () {
+	        if (searchTimeout != undefined) clearTimeout(searchTimeout);
+	        searchTimeout = setTimeout(callUserIsTyping, 250);
+	    };
+	    function callUserIsTyping() {
+	    	msg = nickname + " is typing...";
+	        socket.emit('chat message', msg);
+	    }
+	  }
+	</script>
+  </body>
+</html>

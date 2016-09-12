@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>Press2Gather</title>
+      <meta charset="utf-8" />
+	  <!-- Set the viewport width to device width for mobile -->
+	  <meta name="viewport" content="width=device-width" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      .canvasWrap{
+      	margin:0 auto;
+      	background:#CCCCCC;
+      }
+    </style>
+  </head>
+  <body>
+  	<div class="nick-wrap">
+	  	<form id="formNick">
+	  		<input id="inputNick" autocomplete="off" /><button>Set Nickname</button>
+	  	</form>
+	</div>
+  	<canvas class="canvasWrap" id="canvas" width="500" height="500"></canvas>
+  	
+    <!-- That’s all it takes to load the socket.io-client, which exposes a io global, and then connect. -->
+    <script src="/socket.io/socket.io.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+
+		var socket = io();
+		var userNick;
+
+		var cObj = document.getElementById('canvas');
+
+		$('#formNick').submit(function(){
+	    
+		    // chat message
+			userNick = $('#inputNick').val();
+			console.log("your nickname is "+userNick);
+
+			initCanvas();
+
+			// msg = "Your nickname is " + nickname;
+			// socket.emit('chat message', msg);
+
+			// console.log("");
+
+		    return false;
+
+		    $('#formNickname').hide();
+		    initCanvas();
+		  
+		 });
+
+		function initCanvas(){
+
+			
+
+		  	socket.on('draw',function(rObj){
+			  	draw(rObj);
+		  	});
+
+		
+			function draw(rObj){
+
+				var ctx = cObj.getContext("2d");
+				ctx.beginPath();
+				ctx.rect(rObj.x,rObj.y,20,20);
+				ctx.strokeStyle="red";
+				ctx.stroke();
+			}
+
+			function sendRectData(e){
+				var rectData ={
+					x: e.clientX,
+					y: e.clientY
+				}
+				socket.emit('passRectData', rectData);
+			}
+
+
+			cObj.addEventListener("mousedown", sendRectData);
+
+		}
+	  
+	</script>
+  </body>
+</html>
