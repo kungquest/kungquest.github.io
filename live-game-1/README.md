@@ -38,8 +38,14 @@ At the bottom right, switch your build to 'babel (javascript)'
 
 # Setting up the server
 
-## Run
+## Run Nodemon for Node to listen
 
 ```
-nodemon serversocketconnection.js
+cd live-game-1 
+nodemon server.js --port=3000 -w .
+```
+
+## Run webpack but using node as content base
+```
+webpack-dev-server  --content-base http://localhost:3000 --port=8080
 ```
