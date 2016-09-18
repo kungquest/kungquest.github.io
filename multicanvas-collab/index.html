@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>Press2Gather</title>
+      <meta charset="utf-8" />
+	  <!-- Set the viewport width to device width for mobile -->
+	  <meta name="viewport" content="width=device-width" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      #canvas{
+      	margin:0 auto;
+      	background:#CCCCCC;
+      }
+      .canvasWrap{
+      	height:500px;
+      	width:500px;
+      	overflow:hidden;
+      }
+      .user1{
+      	top:0;
+      	left:0;
+      }
+
+    </style>
+  </head>
+  <body>
+  	<div class="nick-wrap">
+	  	<form id="formNick">
+	  		<input id="inputNick" autocomplete="off" /><button>Set Nickname</button>
+	  	</form>
+	</div>
+	<div class="canvasWrap">
+  		<canvas id="canvas" width="500" height="1000" class="user1"></canvas>
+  	</div>
+  	
+    <!-- That’s all it takes to load the socket.io-client, which exposes a io global, and then connect. -->
+    <script src="/socket.io/socket.io.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+
+		var socket = io();
+		
+	  
+	</script>
+  </body>
+</html>
