@@ -9,7 +9,7 @@ npm install
 
 ### Serve
 
-To serve at http://localhost:8080/:
+To serve at http://localhost:2222/:
 
 ```
 npm start
@@ -26,3 +26,9 @@ To compile HTML/CSS and JavaScript files for production:
 ```
 webpack --config webpack.config.js
 ```
+
+
+## Sublime 3
+
+Install package : 'Babel'
+At the bottom right, switch your build to 'babel (javascript)'

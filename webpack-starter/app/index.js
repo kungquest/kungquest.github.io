@@ -1,4 +1,8 @@
-import test from './test'
+import Song from './Song'
+import MediaPlayer from './MediaPlayer'
 import 'styles/style.scss' 
-test()
-console.log("test");
+
+var song = new Song("Wonderwall", "Oasis", "3:45", true);
+var mp = new MediaPlayer;
+
+mp.playSong(song);

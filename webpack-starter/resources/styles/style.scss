@@ -1,0 +1,12 @@
+$media-player-bg : #F2F2F2;
+$media-player-padding: 10px;
+$media-player-info-padding: 10px;
+
+.Media-player{
+	background: $media-player-bg;
+	padding: $media-player-padding;
+	div{
+		display:inline-block;
+		padding: $media-player-info-padding;
+	}
+}
