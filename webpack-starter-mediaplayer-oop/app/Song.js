@@ -7,4 +7,15 @@ export default class Song extends Media{
 		this.artist = artist;
 	}
 
+	toMediaPlayerInfo() {
+	  	return `<div>
+	        	${this.title}
+	        </div><div>
+	        	${this.artist}
+        	</div>
+        	<div>
+        		${this.duration}
+    		</div>`;
+	}
+
 }
