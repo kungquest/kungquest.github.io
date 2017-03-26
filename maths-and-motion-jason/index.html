@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PaperJs Experiments</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="js/paper-full.js"></script>
+
+    <script type="text/paperscript" canvas="mycanvas">
+       // INSERT CODE HERE
+       // var myCircle = new Path.Circle(view.center,20);
+       // myCircle.fillColor = "white";
+
+       var colours = ['#363938', '#386567', '#5C4134', '#C4A778', '#CE9B59'];
+       var triArray = [];
+
+        function createTriangle(_triangleArray,_triangleCenter,_radius){
+          var c = _triangleCenter;
+          var radius = _radius;
+
+          var trianglePoints = [
+            new Point( c.x-radius, c.y+radius),
+            new Point( c.x, c.y-radius),
+            new Point( c.x+radius, c.y+radius)
+          ];
+
+          var path = new Path(trianglePoints); // draw a triangle on the specified triangle points
+          
+          var triangleColor = colours[Math.floor(Math.random()*colours.length)]; // what color is the triangle
+          
+          path.fillColor = triangleColor; // fill color with
+
+          _triangleArray.push(path);
+        }
+
+        var triDistance = 100; // distance between reiterated triangles
+
+        for(var i=0; i<view.size.width; i+=triDistance){
+
+          for(var j=0; j<view.size.height; j+=triDistance){
+            
+            var radius = triDistance/2;
+            var point = new Point(i,j);
+            createTriangle(triArray,point,radius);
+
+            // fill up the gap with another inverted triangle
+            var nextTriangle = new Point(i+radius,j);
+            createTriangle(triArray,nextTriangle,-radius);
+
+          }
+
+        }
+
+        console.log(triArray.length);
+
+        // function onFrame(event) {
+        //    for(var i = 0; i < triArray.length; i++) {
+        //         triArray[i].fillColor.hue +=5;
+        //    }
+        // }
+        
+        // LOWER FPS TO 20FPS instead of paperjs 30FPS
+
+        // var count = 0;
+
+        // function onFrame(event){
+        //   count++;
+        //   if(count>=20){
+        //     for( var i=0; i<triArray.length; i++){
+        //         // triArray[i].fillColor.hue +=5;
+        //         var triRandomColor = Color.random();
+        //         triArray[i].fillColor = triRandomColor;
+        //     }
+        //     count = 0;
+        //   }
+        // }
+
+        function onFrame(event){
+            for( var i=0; i<triArray.length; i++){
+                
+                // triArray[i].fillColor.hue +=5;
+                // var triRandomColor = Color.random();
+                // triArray[i].fillColor = triRandomColor;
+                // console.log(event.time+" 2 "+i+" *400 ");
+                // var sinus = Math.sin(event.time * 2 + (i*400));
+                var sinus = Math.sin(event.time * 2 + (i*2000));
+                console.log(sinus);
+                triArray[i].scaling = sinus;
+            }
+        }
+
+
+
+        // createTriangle(view.center);
+
+        // function onMouseMove(event) {
+        //   createTriangle(event.point);
+        // }
+
+    </script>
+</head>
+<body>
+
+  <canvas id="mycanvas" class="fullwidthbgcanvas" resize></canvas>
+
+</body>
+</html>
